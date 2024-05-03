@@ -20,7 +20,7 @@ class ProductController extends Controller
         
         foreach ($products as $product) {
             if($product->categories){
-                $product->categorieTitle = $product->categories->pluck('name');
+                $product->categorie = $product->categories->pluck('name');
                 unset($product->categories);
             }
         }
@@ -77,6 +77,11 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+            if($product->categories){
+                $product->categorieTitle = $product->categories->pluck('name');
+                unset($product->categories);
+            }
+
         return response()->json($product) ;
     }
 
@@ -94,16 +99,29 @@ class ProductController extends Controller
      */
     public function update(Request $request,string $id)
     {
-        
+        //pour mettre à jour les categorie du produit
+        if($request->has('categories') && !is_array($request->categories)){
+            $categories = json_decode($request->categories, true);
+            $request->merge(["categories"=>$categories]);
+        }
+
         $request->validate([
+            
             'name' => 'required|max:255',
             'description' => 'string',
             'stock' => 'required',
             'price' => 'required',
             'image'=> 'sometimes|image|max:5000',
-          ]);
+            'categories'=>'sometimes|array',
+
+        ]);
+        
           $product = Product::find($id);
           $product->update($request->all());
+
+            if(!empty($request->categories)) {
+                    $product->categories()->attach($categories);
+            }
 
           $this->storeImage($product);
           
