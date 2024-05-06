@@ -14,6 +14,22 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/products",
+     *     summary="Liste des produits",
+     *     tags={"Products"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne la liste des produits",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Product")
+     *         )
+     *     )
+     * )
+     */ 
     public function index()
     {
         $products = Product::all();
@@ -31,6 +47,8 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+     
     public function create()
     {
         //
@@ -38,6 +56,23 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     */
+
+     /**
+     * @OA\Post(
+     *     path="/products",
+     *     summary="Ajouter un nouveau produit",
+     *     tags={"Products"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ProductRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne le produit ajouté",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -73,6 +108,26 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
+
+     /**
+     * @OA\Get(
+     *     path="/products/{id}",
+     *     summary="Afficher un produit spécifique",
+     *     tags={"Products"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID du produit",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne le produit spécifique",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     )
+     * )
+     */
     public function show(string $id)
     {
         $product = Product::find($id);
@@ -88,6 +143,28 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    /**
+     
+    * @OA\Get(
+    *     path="/products/{id}/edit",
+    *     summary="Afficher le formulaire d'édition d'un produit",
+    *     tags={"Products"},
+    *     @OA\Parameter(
+    *         name="id",
+    *         in="path",
+    *         required=true,
+    *         description="ID du produit à éditer",
+    *         @OA\Schema(type="integer")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Retourne le produit à éditer",
+    *         @OA\JsonContent(ref="#/components/schemas/Product")
+    *     )
+    * )
+    */
+
     public function edit(Product $id)
     {
         $product = Product::find($id);
@@ -97,6 +174,31 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    /**
+     * @OA\Put(
+     *     path="/products/{id}",
+     *     summary="Mettre à jour un produit",
+     *     tags={"Products"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID du produit à mettre à jour",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ProductRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne le produit mis à jour",
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     )
+     * )
+     */
+
     public function update(Request $request,string $id)
     {
         //pour mettre à jour les categorie du produit
@@ -131,6 +233,26 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    /**
+     * @OA\Delete(
+     *     path="/products/{id}",
+     *     summary="Supprimer un produit",
+     *     tags={"Products"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID du produit à supprimer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Message de confirmation de suppression"
+     *     )
+     * )
+     */
+
     public function destroy(String $id)
     {
         $product = Product::find($id);
@@ -138,6 +260,25 @@ class ProductController extends Controller
         $product->delete();
         return "Le produit a été bien supprimé !" ;
     }
+
+    /**
+     * Store the product image.
+     *
+     * @param \App\Models\Product $product
+     * @return void
+     *
+     * @OA\Parameter(
+     *     name="image",
+     *     in="formData",
+     *     required=true,
+     *     description="Image à stocker",
+     *     @OA\Schema(type="file")
+     * )
+     * @OA\Response(
+     *     response=200,
+     *     description="Image stockée avec succès"
+     * )
+     */
 
     private function storeImage(Product $product){
 
