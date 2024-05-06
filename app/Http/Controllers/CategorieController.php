@@ -13,6 +13,22 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/categories",
+     *     summary="Liste des catégories",
+     *     tags={"Categories"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne la liste des catégories",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Categorie")
+     *         )
+     *     )
+     * )
+     */
     public function index()
     {
         $categories = Categorie::all();
@@ -30,6 +46,23 @@ class CategorieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    /**
+     * @OA\Post(
+     *     path="/categories",
+     *     summary="Créer une nouvelle catégorie",
+     *     tags={"Categories"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Catégorie créée avec succès",
+     *         @OA\JsonContent(ref="#/components/schemas/Categorie")
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -46,6 +79,26 @@ class CategorieController extends Controller
     /**
      * Display the specified resource.
      */
+
+     /**
+     * @OA\Get(
+     *     path="/categories/{id}",
+     *     summary="Afficher une catégorie spécifique",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la catégorie",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne la catégorie spécifique",
+     *         @OA\JsonContent(ref="#/components/schemas/Categorie")
+     *     )
+     * )
+     */ 
     public function show(string $id)
     {
         // dd($product);
@@ -56,6 +109,26 @@ class CategorieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/categories/{id}/edit",
+     *     summary="Afficher le formulaire d'édition d'une catégorie",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la catégorie à éditer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne la catégorie à éditer",
+     *         @OA\JsonContent(ref="#/components/schemas/Categorie")
+     *     )
+     * )
+     */ 
     public function edit(Categorie $id)
     {
         $categorie = Categorie::find($id);
@@ -64,6 +137,30 @@ class CategorieController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+
+    /**
+     * @OA\Put(
+     *     path="/categories/{id}",
+     *     summary="Mettre à jour une catégorie",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la catégorie à mettre à jour",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Catégorie mise à jour avec succès",
+     *         @OA\JsonContent(ref="#/components/schemas/Categorie")
+     *     )
+     * )
      */
     public function update(Request $request,string $id)
     {
@@ -81,6 +178,25 @@ class CategorieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    /**
+     * @OA\Delete(
+     *     path="/categories/{id}",
+     *     summary="Supprimer une catégorie",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la catégorie à supprimer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Catégorie supprimée avec succès"
+     *     )
+     * )
+     */ 
     public function destroy(String $id)
     {
         $categorie = Categorie::find($id);
