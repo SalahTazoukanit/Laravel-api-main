@@ -10,6 +10,52 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @OA\Schema(
+ *     title="User",
+ *     description="User model",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         description="User ID"
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="User name"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         format="email",
+ *         description="User email address"
+ *     ),
+ *     @OA\Property(
+ *         property="password",
+ *         type="string",
+ *         format="password",
+ *         description="User password"
+ *     ),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         description="Date and time when the user was created"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         description="Date and time when the user was last updated"
+ *     ),
+ *     @OA\Property(
+ *         property="profile_photo_url",
+ *         type="string",
+ *         description="URL of the user's profile photo"
+ *     )
+ * )
+ */
+
 class User extends Authenticatable
 {
     use HasApiTokens;
