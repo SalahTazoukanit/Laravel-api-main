@@ -9,7 +9,27 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Enregistrer un nouvel utilisateur",
+     *     tags={"Users"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UserRegisterRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur enregistré avec succès",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="User created successfully"),
+     *             @OA\Property(property="token", type="string")
+     *         )
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         
@@ -56,7 +76,28 @@ class UserController extends Controller
         
     }
 
-
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     summary="Connecter un utilisateur",
+     *     tags={"Users"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UserLoginRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur connecté avec succès",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="User logged in successfully"),
+     *             @OA\Property(property="user", ref="#/components/schemas/User"),
+     *             @OA\Property(property="token", type="string")
+     *         )
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         
@@ -106,21 +147,28 @@ class UserController extends Controller
                 // "token"=>$token,
             ], 200);
         
-    }
+        }
 
     }
-
-
-
-
-
-
-
-
-
 
     /**
      * Display a listing of the resource.
+     */
+
+    /**
+     * @OA\Get(
+     *     path="/users",
+     *     summary="Liste des utilisateurs",
+     *     tags={"Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne la liste des utilisateurs",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -131,6 +179,23 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     */
+
+    /**
+     * @OA\Post(
+     *     path="/users",
+     *     summary="Créer un nouvel utilisateur",
+     *     tags={"Users"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UserRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur créé avec succès",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -147,6 +212,26 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/users/{id}",
+     *     summary="Afficher un utilisateur spécifique",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne l'utilisateur spécifique",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
+     */
     public function show(string $id)
     {
         $user = User::find($id);
@@ -155,6 +240,30 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+
+    /**
+     * @OA\Put(
+     *     path="/users/{id}",
+     *     summary="Mettre à jour un utilisateur",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur à mettre à jour",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UserRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur mis à jour avec succès",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function update(Request $request, string $id)
     {
@@ -170,6 +279,25 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     */
+
+    /**
+     * @OA\Delete(
+     *     path="/users/{id}",
+     *     summary="Supprimer un utilisateur",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de l'utilisateur à supprimer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur supprimé avec succès"
+     *     )
+     * )
      */
     public function destroy(string $id)
     {
