@@ -16,7 +16,7 @@ class CategorieController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/categories",
+     *     path="/api/v1/categories",
      *     summary="Liste des catégories",
      *     tags={"Categories"},
      *     @OA\Response(
@@ -43,26 +43,28 @@ class CategorieController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
 
     /**
-     * @OA\Post(
-     *     path="/categories",
-     *     summary="Créer une nouvelle catégorie",
-     *     tags={"Categories"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
+     * @OA\Schema(
+     *     schema="CategorieRequest",
+     *     title="Categorie Request",
+     *     description="Request body for creating or updating a Categorie.",
+     *     @OA\Property(
+     *         property="name",
+     *         type="string",
+     *         description="Name of the categorie",
+     *         example="Category Name"
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Catégorie créée avec succès",
-     *         @OA\JsonContent(ref="#/components/schemas/Categorie")
-     *     )
+     *     @OA\Property(
+     *         property="description",
+     *         type="string",
+     *         description="Description of the categorie",
+     *         example="Category Description"
+     *     ),
      * )
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -82,7 +84,7 @@ class CategorieController extends Controller
 
      /**
      * @OA\Get(
-     *     path="/categories/{id}",
+     *     path="/api/v1/categories/{id}",
      *     summary="Afficher une catégorie spécifique",
      *     tags={"Categories"},
      *     @OA\Parameter(
@@ -112,7 +114,7 @@ class CategorieController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/categories/{id}/edit",
+     *     path="/api/v1/categories/{id}/edit",
      *     summary="Afficher le formulaire d'édition d'une catégorie",
      *     tags={"Categories"},
      *     @OA\Parameter(
@@ -141,7 +143,7 @@ class CategorieController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/categories/{id}",
+     *     path="/api/v1/categories/{id}",
      *     summary="Mettre à jour une catégorie",
      *     tags={"Categories"},
      *     @OA\Parameter(
@@ -181,7 +183,7 @@ class CategorieController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/categories/{id}",
+     *     path="/api/v1/categories/{id}",
      *     summary="Supprimer une catégorie",
      *     tags={"Categories"},
      *     @OA\Parameter(

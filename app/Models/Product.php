@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @OA\Schema(
+ *     schema="Product",
  *     title="Product",
  *     description="Product model",
  *     @OA\Property(

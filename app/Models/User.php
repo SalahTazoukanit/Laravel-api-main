@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @OA\Schema(
+ *     schema="User",
  *     title="User",
  *     description="User model",
  *     @OA\Property(

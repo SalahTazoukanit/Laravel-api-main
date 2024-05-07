@@ -12,7 +12,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
-    
+    Route::prefix('v1')->group(function (){
+
     Route::get('/users', [UserController::class , 'index'])->name("users.get");
     Route::get('/users/{id}', [UserController::class, 'show'])->name("user.show");
     Route::post('/users', [UserController::class, 'store'])->name("users.store");
@@ -35,7 +36,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('/categories/{id}/edit', [CategorieController::class, 'edit'])->name("categories.edit");
     Route::put('/categories/{id}', [CategorieController::class, 'update'])->name("categories.update");
     Route::delete('/categories/{id}', [CategorieController::class, 'destroy'])->name("categories.destroy");
-    
+}); 
     
     
 });    
@@ -44,6 +45,11 @@ Route::prefix('v1')->group(function (){
     
     Route::post('/login', [UserController::class, 'login']);        
     Route::post('/register', [UserController::class, 'register']);
+
+    Route::get('/welcome', function(){
+        return "Bienvenue sur l'application Vue JS 3 qui utilise l'API Laravel !
+                Veuillez vous connecter !";
+    });
     
     Route::get('/api/documentation', 'L5Swagger\Http\Controllers\SwaggerController@api');
 });

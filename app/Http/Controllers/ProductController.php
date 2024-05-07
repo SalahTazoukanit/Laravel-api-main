@@ -17,7 +17,7 @@ class ProductController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/products",
+     *     path="/api/v1/products",
      *     summary="Liste des produits",
      *     tags={"Products"},
      *     @OA\Response(
@@ -60,12 +60,12 @@ class ProductController extends Controller
 
      /**
      * @OA\Post(
-     *     path="/products",
+     *     path="/api/v1/products",
      *     summary="Ajouter un nouveau produit",
      *     tags={"Products"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ProductRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -111,7 +111,7 @@ class ProductController extends Controller
 
      /**
      * @OA\Get(
-     *     path="/products/{id}",
+     *     path="/api/v1/products/{id}",
      *     summary="Afficher un produit spécifique",
      *     tags={"Products"},
      *     @OA\Parameter(
@@ -147,7 +147,7 @@ class ProductController extends Controller
     /**
      
     * @OA\Get(
-    *     path="/products/{id}/edit",
+    *     path="/api/v1/products/{id}/edit",
     *     summary="Afficher le formulaire d'édition d'un produit",
     *     tags={"Products"},
     *     @OA\Parameter(
@@ -177,7 +177,7 @@ class ProductController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/products/{id}",
+     *     path="/api/v1/products/{id}",
      *     summary="Mettre à jour un produit",
      *     tags={"Products"},
      *     @OA\Parameter(
@@ -189,7 +189,7 @@ class ProductController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ProductRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/Product")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -236,7 +236,7 @@ class ProductController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/products/{id}",
+     *     path="/api/v1/products/{id}",
      *     summary="Supprimer un produit",
      *     tags={"Products"},
      *     @OA\Parameter(
@@ -261,24 +261,6 @@ class ProductController extends Controller
         return "Le produit a été bien supprimé !" ;
     }
 
-    /**
-     * Store the product image.
-     *
-     * @param \App\Models\Product $product
-     * @return void
-     *
-     * @OA\Parameter(
-     *     name="image",
-     *     in="formData",
-     *     required=true,
-     *     description="Image à stocker",
-     *     @OA\Schema(type="file")
-     * )
-     * @OA\Response(
-     *     response=200,
-     *     description="Image stockée avec succès"
-     * )
-     */
 
     private function storeImage(Product $product){
 

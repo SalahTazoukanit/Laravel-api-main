@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @OA\Schema(
+ *     schema="Categorie",
  *     title="Categorie",
  *     description="Categorie model",
  *     @OA\Property(

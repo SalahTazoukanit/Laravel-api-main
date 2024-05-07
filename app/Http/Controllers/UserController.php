@@ -11,12 +11,12 @@ class UserController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/register",
+     *     path="/api/v1/register",
      *     summary="Enregistrer un nouvel utilisateur",
      *     tags={"Users"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/UserRegisterRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -78,12 +78,12 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/api/v1/login",
      *     summary="Connecter un utilisateur",
      *     tags={"Users"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/UserLoginRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -157,7 +157,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/users",
+     *     path="/api/v1/users",
      *     summary="Liste des utilisateurs",
      *     tags={"Users"},
      *     @OA\Response(
@@ -183,12 +183,12 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/users",
+     *     path="/api/v1/users",
      *     summary="Créer un nouvel utilisateur",
      *     tags={"Users"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/UserRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -215,7 +215,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/users/{id}",
+     *     path="/api/v1/users/{id}",
      *     summary="Afficher un utilisateur spécifique",
      *     tags={"Users"},
      *     @OA\Parameter(
@@ -244,7 +244,7 @@ class UserController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/users/{id}",
+     *     path="/api/v1/users/{id}",
      *     summary="Mettre à jour un utilisateur",
      *     tags={"Users"},
      *     @OA\Parameter(
@@ -256,7 +256,7 @@ class UserController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/UserRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -280,25 +280,39 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-
     /**
      * @OA\Delete(
-     *     path="/users/{id}",
+     *     path="/api/v1/users/{id}",
      *     summary="Supprimer un utilisateur",
      *     tags={"Users"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         required=true,
      *         description="ID de l'utilisateur à supprimer",
-     *         @OA\Schema(type="integer")
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Utilisateur supprimé avec succès"
+     *         description="Utilisateur supprimé avec succès",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="L'utilisateur a été supprimé avec succès")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Utilisateur non trouvé",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Utilisateur non trouvé")
+     *         )
      *     )
      * )
      */
+
     public function destroy(string $id)
     {
         $user = User::find($id);
